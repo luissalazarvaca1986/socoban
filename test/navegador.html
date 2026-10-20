@@ -1,0 +1,76 @@
+<!doctype html><meta charset="utf-8"><title>Prueba en navegador</title>
+<pre id="resultado">En curso</pre>
+<script type="module">
+import { Progreso } from '../js/progreso.js';
+import { abrirAlmacen, leerContenido, guardarContenido, descargarContenido } from '../js/almacen-local.js';
+import { guardar, cargarUsuario, listarUsuario, listar } from '../js/niveles-almacen.js?v=marcas1';
+const salida = document.getElementById('resultado');
+const comprobar = (condicion, mensaje) => { if (!condicion) throw Error(mensaje); };
+const esperar = async fn => { for (let i = 0; i < 100; i++) { if (fn()) return; await new Promise(r => setTimeout(r, 50)); } throw Error('Tiempo agotado'); };
+try {
+  if (!['127.0.0.1', 'localhost'].includes(location.hostname)) throw Error('Esta prueba solo se ejecuta en localhost.');
+  const db = await abrirAlmacen();
+  await new Promise((resolve, reject) => { const tx = db.transaction(['marcas', 'contenido'], 'readwrite'); tx.objectStore('marcas').clear(); tx.objectStore('contenido').clear(); tx.oncomplete = resolve; tx.onerror = () => reject(tx.error); });
+  const nivel = { nombre: 'Persistencia', texto: '#####\n#@$.#\n#####' };
+  const a = new Progreso(); await a.cargar();
+  await a.guardar(nivel, { pasos: 3, tiempoMs: 1900 });
+  const b = new Progreso(); await b.cargar();
+  comprobar(b.persistente && b.consultar(nivel).mejor.pasos === 3, 'IndexedDB no recuperó la marca');
+  localStorage.setItem('socoban_niveles_v1', JSON.stringify([{ nombre: 'Antiguo', texto: nivel.texto }]));
+  await cargarUsuario(); comprobar(listarUsuario().length === 1, 'Migración de mapas');
+  await guardar('Propio', nivel.texto); await cargarUsuario();
+  comprobar(listarUsuario().length === 2 && listar().length === 23, 'Mapas propios o campaña');
+  await guardarContenido('sonidos', { prueba: 'persistencia' });
+  comprobar((await leerContenido('sonidos')).prueba === 'persistencia', 'Sonidos');
+  await guardarContenido('sonidos', null);
+  const descargas = [];
+  const click = HTMLAnchorElement.prototype.click;
+  HTMLAnchorElement.prototype.click = function() { descargas.push(this.download); };
+  descargarContenido('mapas', listarUsuario()); descargarContenido('sonidos', { pistas: {} });
+  let prohibido = false; try { descargarContenido('marcas', {}); } catch { prohibido = true; }
+  HTMLAnchorElement.prototype.click = click;
+  comprobar(prohibido && descargas.join(',') === 'mapas.json,sonidos.json', 'Descarga de marcas');
+  const frame = document.createElement('iframe'); frame.width = 400; frame.height = 900;
+  frame.src = '../index.html'; document.body.append(frame);
+  await esperar(() => frame.contentDocument?.getElementById('btn-saltar'));
+  await esperar(() => frame.contentDocument.getElementById('info').textContent.includes('Tutorial'));
+  let d = frame.contentDocument;
+  comprobar(!d.getElementById('pie'), 'Sigue el texto debajo de los controles');
+  comprobar(d.querySelectorAll('#toolbar > button').length === 4, 'Toolbar incompleta');
+  comprobar(d.querySelector('#toolbar > button:last-child').id === 'btn-editar', 'El lápiz no está al final');
+  comprobar([...d.querySelectorAll('#toolbar > button')].every(b => b.getBoundingClientRect().width === 45 && b.getBoundingClientRect().height === 45), 'Tamaño de toolbar incorrecto');
+  comprobar(d.querySelector('#toolbar [data-accion="sonido"]'), 'Sonido fuera de la toolbar');
+  comprobar(d.querySelectorAll('#acciones > button').length === 2, 'Deshacer/reiniciar');
+  d.getElementById('btn-editar').click();
+  comprobar(d.getElementById('editores-dialogo').open, 'No abre el menú de editores');
+  const cajaEditor = d.getElementById('editores-dialogo').getBoundingClientRect();
+  const cierreEditor = d.getElementById('cerrar-editores').getBoundingClientRect();
+  comprobar(cajaEditor.right - cierreEditor.right <= 10 && cierreEditor.y - cajaEditor.y <= 10, 'Cierre fuera de la esquina superior derecha');
+  comprobar(d.querySelectorAll('#editores-dialogo a[aria-label]').length === 3, 'Enlaces de editores');
+  d.getElementById('cerrar-editores').click();
+  const botonesToolbar = [...d.querySelectorAll('#toolbar > button')].map(b => b.getBoundingClientRect());
+  comprobar(botonesToolbar.every(r => r.y === botonesToolbar[0].y), 'La toolbar se parte en varias filas');
+
+
+  d.getElementById('btn-saltar').click();
+  comprobar(d.getElementById('info').textContent.includes('Primer empuje'), 'Saltar mapa');
+  const derecha = () => frame.contentWindow.dispatchEvent(new KeyboardEvent('keydown', { code: 'ArrowRight', bubbles: true }));
+  derecha();
+  d.querySelector('[data-accion="deshacer"]').dispatchEvent(new PointerEvent('pointerdown', { bubbles: true }));
+  derecha(); derecha();
+  await esperar(() => d.getElementById('texto-completado').textContent.includes('Nueva mejor marca'));
+  comprobar(d.getElementById('texto-completado').textContent.includes('3 pasos'), 'Deshacer redujo pasos');
+  d.getElementById('btn-siguiente').click();
+  d.getElementById('btn-mapas').click();
+  comprobar(d.querySelectorAll('#lista-mapas tr').length === 25, 'Faltan mapas propios');
+  comprobar(d.querySelectorAll('#lista-mapas tr')[1].textContent.includes('Completado'), 'Mapa completado');
+  comprobar(d.querySelectorAll('#acciones .etiqueta').length === 0, 'Botones con texto');
+  frame.src = '../index.html?recarga=1';
+  await new Promise(resolve => frame.onload = resolve);
+  await esperar(() => frame.contentDocument.getElementById('info').textContent.includes('Tutorial'));
+  d = frame.contentDocument;
+  d.getElementById('btn-mapas').click();
+  comprobar(d.querySelectorAll('#lista-mapas tr')[1].textContent.includes('3 pasos'), 'Marca perdida tras recargar');
+  salida.textContent = 'PASS: IndexedDB, migración, mapas propios, sonidos, descargas limitadas, saltar, victoria, deshacer, marcas tras recarga e iconos.';
+} catch (error) { salida.textContent = 'FAIL: ' + error.stack; }
+</script>

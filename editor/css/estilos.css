@@ -1,0 +1,96 @@
+/* Editor de sprites — estilos propios de la herramienta.
+   Decisión: paleta oscura, módulo de 8 px, pixel art nítido. */
+
+:root {
+  --mod: 8px;
+  --fondo: #1a1c2c;
+  --panel: #262838;
+  --borde: #3b3e55;
+  --texto: #f2f2f6;
+  --tenue: #a0a4b8;
+  --acento: #94b0c2;
+  --tile-px: 32;      /* lado del lienzo en pixeles logicos */
+  --zoom: 32;         /* zoom del lienzo principal (css px por pixel logico) */
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; background: var(--fondo); color: var(--texto); font: 14px/1.4 system-ui, sans-serif; }
+
+.barra {
+  display: flex; align-items: center; gap: calc(var(--mod) * 2);
+  padding: var(--mod) calc(var(--mod) * 2); background: var(--panel);
+  border-bottom: 1px solid var(--borde);
+}
+.barra h1 { font-size: 1rem; margin: 0; }
+.acciones { display: flex; gap: var(--mod); flex-wrap: wrap; }
+.sep { width: 1px; background: var(--borde); align-self: stretch; }
+
+button, .boton {
+  background: var(--panel); color: var(--texto); border: 1px solid var(--borde);
+  padding: calc(var(--mod) * 0.75) var(--mod); border-radius: var(--mod); cursor: pointer;
+  font: inherit;
+}
+button:hover { background: var(--borde); }
+button:focus-visible { outline: 2px solid var(--acento); outline-offset: 2px; }
+
+.area {
+  display: grid; grid-template-columns: 260px 1fr 260px; gap: calc(var(--mod) * 2);
+  padding: calc(var(--mod) * 2); height: calc(100% - 56px); overflow: hidden;
+}
+.col { background: var(--panel); border: 1px solid var(--borde); border-radius: var(--mod);
+       padding: var(--mod); overflow: auto; }
+.col h2 { font-size: 0.9rem; margin: var(--mod) 0; color: var(--tenue); }
+
+.rejilla-tiles { list-style: none; margin: 0; padding: 0; display: grid;
+                 grid-template-columns: repeat(auto-fill, 48px); gap: 4px; }
+.rejilla-tiles li, .rejilla-tiles .fotograma {
+  width: 48px; height: 48px; background: #000; border: 1px solid var(--borde);
+  cursor: pointer; display: block; image-rendering: pixelated;
+}
+.rejilla-tiles li.sel, .rejilla-tiles .fotograma.sel { outline: 2px solid var(--acento); }
+
+#lista-animaciones { list-style: none; margin: 0; padding: 0; }
+#lista-animaciones li { padding: var(--mod); border-bottom: 1px solid var(--borde);
+                        cursor: pointer; }
+#lista-animaciones li.sel { background: var(--borde); }
+
+.lienzo-col { display: flex; flex-direction: column; align-items: center; gap: var(--mod); }
+#input-nombre { width: 100%; padding: var(--mod); background: var(--fondo);
+                color: var(--texto); border: 1px solid var(--borde); border-radius: 4px; }
+
+#lienzo {
+  width: min(512px, 100%); height: auto; aspect-ratio: 1; touch-action: none;
+  background: repeating-conic-gradient(#222 0 25%, #333 0 50%) 0 0 / 32px 32px;
+  image-rendering: pixelated; cursor: crosshair;
+  border: 1px solid var(--borde);
+}
+
+.paleta { display: grid; grid-template-columns: repeat(8, 32px); gap: 4px; }
+.paleta .swatch { width: 32px; height: 32px; border: 2px solid var(--borde); cursor: pointer; border-radius: 4px; }
+.paleta .swatch.sel { border-color: var(--acento); transform: scale(1.1); }
+.paleta .swatch.transparente {
+  background-image: linear-gradient(45deg, #666 25%, transparent 25%),
+                    linear-gradient(-45deg, #666 25%, transparent 25%),
+                    linear-gradient(45deg, transparent 75%, #666 75%),
+                    linear-gradient(-45deg, transparent 75%, #666 75%);
+  background-size: 8px 8px; background-position: 0 0, 0 4px, 4px -4px, -4px 0;
+}
+
+.pista { color: var(--tenue); font-size: 0.85rem; margin: 0; }
+
+label { display: block; color: var(--tenue); font-size: 0.9rem; }
+label input { width: 100%; padding: 4px; background: var(--fondo); color: var(--texto);
+              border: 1px solid var(--borde); border-radius: 4px; margin-top: 4px; }
+
+/* Modo compacto para pantallas angostas: una columna debajo de otra. */
+@media (max-width: 900px) {
+  .area { grid-template-columns: 1fr; height: auto; overflow: visible; }
+}
+
+#mensaje-sprites { margin: 8px 16px; }
+.rejilla-tiles li:focus-visible { outline: 2px solid var(--acento); }
+
+.duracion-guardar { display: flex; align-items: flex-end; gap: 8px; }
+.duracion-guardar label { flex: 1; min-width: 0; }
+.duracion-guardar button { display: grid; place-items: center; flex: 0 0 32px; width: 32px; height: 32px; padding: 7px; }
+.duracion-guardar svg { display: block; }

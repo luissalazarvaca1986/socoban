@@ -1,0 +1,309 @@
+/* Juego Sokoban — estilos del index.html.
+   El tablero se dibuja en <canvas>. Lo demas es el mando: D-pad y
+   acciones. Decisiones de diseño documentadas en el cap. 12 §3 del
+   libro: targets ≥60 px (WCAG 2.5.8), feedback inmediato al pulsar,
+   layout de mando clasico (D-pad izquierda, acciones derecha), sin
+   repeticion al mantener. */
+
+:root {
+  --fondo: #1a1c2c;
+  --panel: #262838;
+  --panel-claro: #333652;
+  --borde: #3b3e55;
+  --texto: #f2f2f6;
+  --tenue: #a0a4b8;
+  --acento: #94b0c2;
+  --acento-fuerte: #73eff7;
+  --exito: #38b764;
+  --rechazo: #b13e53;
+  --btn-min: 60px;
+  --dpad-tam: 72px;
+}
+
+* { box-sizing: border-box; }
+html, body {
+  margin: 0; min-height: 100%;
+  background: var(--fondo); color: var(--texto);
+  font: 15px/1.4 system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+}
+body {
+  overscroll-behavior: none;
+}
+
+#app {
+  min-height: 100vh;
+  display: grid;
+  grid-template-areas:
+    "hud     hud"
+    "toolbar toolbar"
+    "tablero tablero"
+    "mando   mando";
+  grid-template-rows: auto auto auto auto;
+  align-content: start;
+  gap: 12px;
+  /* Marco simetrico: mismos 16 px a cada lado, mas la safe-area del
+     dispositivo (muesca, curva, barra de gestos). */
+  padding:
+    calc(16px + env(safe-area-inset-top))
+    calc(16px + env(safe-area-inset-right))
+    calc(16px + env(safe-area-inset-bottom))
+    calc(16px + env(safe-area-inset-left));
+  touch-action: manipulation;
+  user-select: none; -webkit-user-select: none;
+}
+
+/* --- Cabecera -------------------------------------------------- */
+#hud {
+  grid-area: hud;
+  display: flex; justify-content: space-between; align-items: baseline;
+  padding: 0 8px;
+}
+#hud h1 { margin: 0; font-size: 1.1rem; font-weight: 500; color: var(--tenue); letter-spacing: 0.03em; }
+#info { margin: 0; font-size: 0.95rem; color: var(--acento-fuerte); min-height: 1.4em; }
+
+/* --- Tablero --------------------------------------------------- */
+#tablero {
+  grid-area: tablero;
+  display: grid; place-items: center;
+  min-height: 240px;
+  min-width: 320px;
+}
+#game {
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  border: 1px solid var(--borde);
+  background: #000;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.35);
+  /* El tamano CSS lo fija js/main.js a un multiplo entero del logico. */
+  touch-action: none;
+}
+
+/* --- Mando: D-pad + acciones ---------------------------------- */
+#mando {
+  grid-area: mando;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  grid-template-areas: "dpad hueco acciones";
+  gap: 24px;
+  align-items: center;
+  padding: 0 8px;
+}
+
+.btn {
+  background: var(--panel);
+  color: var(--texto);
+  border: 1px solid var(--borde);
+  border-radius: 10px;
+  cursor: pointer;
+  font: inherit;
+  min-height: var(--btn-min);
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  transition: background-color 60ms ease, transform 60ms ease;
+}
+.btn:focus-visible {
+  outline: 2px solid var(--acento-fuerte);
+  outline-offset: 2px;
+}
+.btn.pulsado,
+.btn:active {
+  background: var(--acento-fuerte);
+  color: var(--fondo);
+  transform: scale(0.96);
+}
+
+/* D-pad: cuadricula 3x3 con botones solo en norte/sur/este/oeste. */
+#dpad {
+  grid-area: dpad;
+  display: grid;
+  grid-template-columns: repeat(3, var(--dpad-tam));
+  grid-template-rows: repeat(3, var(--dpad-tam));
+  gap: 6px;
+}
+.dpad-btn {
+  font-size: 1.8rem;
+  display: grid; place-items: center;
+}
+.dpad-btn.arriba    { grid-column: 2; grid-row: 1; }
+.dpad-btn.izquierda { grid-column: 1; grid-row: 2; }
+.dpad-btn.derecha   { grid-column: 3; grid-row: 2; }
+.dpad-btn.abajo     { grid-column: 2; grid-row: 3; }
+
+/* Acciones: columna de botones etiquetados a la derecha. */
+#acciones {
+  grid-area: acciones;
+  display: flex; flex-direction: column; gap: 8px;
+  min-width: 140px;
+}
+#acciones .btn {
+  display: grid;
+  grid-template-columns: 24px 1fr;
+  align-items: center;
+  padding: 10px 12px;
+  text-align: left;
+  gap: 10px;
+}
+#acciones .icono { font-size: 1.2rem; }
+#acciones .etiqueta { font-weight: 500; }
+.accion-sonido[aria-pressed="true"] { background: var(--panel-claro); color: var(--tenue); }
+
+/* --- Overlay de nivel completado --- */
+#overlay-completado {
+  position: fixed; inset: 0;
+  background: rgba(26, 28, 44, 0.85);
+  display: grid; place-items: center;
+  z-index: 100;
+  padding: 20px;
+}
+#overlay-completado.oculto { display: none; }
+#overlay-completado .dialogo {
+  background: var(--panel);
+  border: 1px solid var(--borde);
+  border-radius: 12px;
+  padding: 24px;
+  max-width: 360px; width: 100%;
+  text-align: center;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+}
+#overlay-completado h2 {
+  margin: 0 0 8px;
+  color: var(--exito);
+  font-size: 1.5rem;
+}
+#overlay-completado p { margin: 0 0 20px; color: var(--texto); }
+#overlay-completado .acciones {
+  display: flex; gap: 10px; flex-wrap: wrap; justify-content: center;
+}
+#overlay-completado button {
+  background: var(--panel-claro); color: var(--texto);
+  border: 1px solid var(--borde); border-radius: 8px;
+  padding: 10px 16px; font: inherit;
+  min-height: 44px; cursor: pointer;
+}
+#overlay-completado #btn-siguiente {
+  background: var(--exito); color: var(--fondo);
+  border-color: var(--exito); font-weight: 600;
+}
+#overlay-completado button:active { transform: scale(0.97); }
+
+/* ---------- Adaptacion a cada tamaño de pantalla ---------------
+   El Sokoban se abre en movil (vertical y horizontal) y en escritorio.
+   Las reglas de layout cambian con el ancho y la orientacion de la
+   pantalla, no con el user-agent.
+   --------------------------------------------------------------- */
+
+/* Movil vertical (<720px, retrato): D-pad y acciones apilados
+   debajo del tablero, pulgares izquierdo y derecho repartiendose la
+   pantalla horizontalmente. El D-pad usa botones mas chicos (54 px)
+   y queda separado del borde para que el pulgar no toque la curva de
+   la pantalla. */
+@media (max-width: 720px) and (orientation: portrait) {
+  :root { --dpad-tam: 54px; }
+  #mando {
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas: "dpad acciones";
+    gap: 16px;
+  }
+  #dpad { justify-self: start; }
+  #acciones { align-self: center; min-width: 0; }
+}
+
+/* Movil horizontal (altura corta, tipico de telefonos en apaisado):
+   formato mando clasico. D-pad a la izquierda del tablero, acciones a
+   la derecha. El pie se oculta en esta orientacion ---la ayuda cabe en
+   el tamaño de un boton y no necesita leerse mientras se juega---. */
+@media (orientation: landscape) and (max-height: 500px) {
+  #app {
+    grid-template-areas:
+      "hud     hud     hud"
+      "toolbar toolbar toolbar"
+      "dpad    tablero acciones";
+    grid-template-columns: auto 1fr auto;
+    grid-template-rows: auto auto 1fr;
+    gap: 12px;
+    /* Marco simetrico: mismos 12 px a cada lado, mas safe-area. En
+       horizontal la altura es corta y el padding vertical se reduce
+       un poco respecto al vertical para que el tablero no se achique. */
+    padding:
+      calc(12px + env(safe-area-inset-top))
+      calc(12px + env(safe-area-inset-right))
+      calc(12px + env(safe-area-inset-bottom))
+      calc(12px + env(safe-area-inset-left));
+    min-height: 100vh;
+  }
+  #hud { padding: 0 4px; }
+  #hud h1 { font-size: 1rem; }
+  #tablero { grid-area: tablero; align-self: center; }
+  #mando { display: contents; } /* los hijos pasan al grid del padre */
+  #dpad { grid-area: dpad; align-self: center; }
+  #acciones { grid-area: acciones; align-self: center; min-width: 140px; }
+  :root { --dpad-tam: 60px; }
+}
+
+/* Pantalla ancha con puntero fino (escritorio): el D-pad estorba, el
+   teclado es el canal principal. Se oculta el D-pad y las acciones
+   quedan en linea bajo el tablero. */
+@media (min-width: 820px) and (hover: hover) and (pointer: fine) {
+  #dpad { display: none; }
+  #mando {
+    grid-template-columns: 1fr;
+    grid-template-areas: "acciones";
+    justify-items: center;
+  }
+  #acciones { flex-direction: row; }
+}
+
+/* Progreso y resultados locales. */
+#hud { flex-wrap: wrap; gap: 8px 16px; }
+#reloj { margin: 0; font-variant-numeric: tabular-nums; }
+#hud .btn { padding: 8px 14px; min-height: 44px; }
+#acciones { min-width: 60px; }
+#acciones .btn { display: grid; grid-template-columns: 1fr; place-items: center; padding: 10px; min-width: 60px; }
+#acciones .icono { font-size: 1.6rem; }
+#btn-saltar { padding: 10px; }
+#mapas-dialogo { color: var(--texto); background: var(--panel); border: 1px solid var(--borde); border-radius: 12px; width: min(900px, 95vw); max-height: 90vh; padding: 20px; }
+#mapas-dialogo::backdrop { background: rgba(0,0,0,.8); }
+.tabla-mapas { overflow: auto; max-height: 55vh; }
+#mapas-dialogo table { border-collapse: collapse; width: 100%; font-size: .9rem; }
+#mapas-dialogo th, #mapas-dialogo td { padding: 10px; text-align: left; border-bottom: 1px solid var(--borde); }
+#mapas-dialogo .btn { padding: 8px 12px; min-height: 44px; }
+#mapas-dialogo tr.completado td:nth-child(2) { color: var(--exito); }
+@media (max-width: 720px) and (orientation: portrait) {
+  #acciones { flex-direction: row; flex-wrap: wrap; justify-content: end; }
+}
+@media (orientation: landscape) and (max-height: 500px) {
+  #acciones { min-width: 60px; }
+}
+@media (min-width: 820px) and (hover: hover) and (pointer: fine) {
+}
+
+@media (max-width: 600px) {
+  #mapas-dialogo thead { display: none; }
+  #mapas-dialogo table, #mapas-dialogo tbody { display: block; }
+  #mapas-dialogo tr { display: grid; grid-template-columns: 1fr auto; gap: 4px 12px; padding: 12px 0; border-bottom: 1px solid var(--borde); }
+  #mapas-dialogo td { border: 0; padding: 2px; }
+  #mapas-dialogo td:nth-child(1) { grid-area: 1 / 1; font-weight: 600; }
+  #mapas-dialogo td:nth-child(2) { grid-area: 1 / 2; }
+  #mapas-dialogo td:nth-child(3) { grid-area: 2 / 1; }
+  #mapas-dialogo td:nth-child(4) { grid-area: 3 / 1; }
+  #mapas-dialogo td:nth-child(5) { grid-area: 2 / 2 / 4 / 3; align-self: center; }
+  #mapas-dialogo td:nth-child(3)::before { content: 'Mejor: '; color: var(--tenue); }
+  #mapas-dialogo td:nth-child(4)::before { content: 'Última: '; color: var(--tenue); }
+}
+
+/* Cabecera, toolbar, juego y controles: sin texto bajo el mando. */
+#hud { flex-wrap: nowrap; gap: 10px; padding: 0; }
+#hud h1, #info, #reloj { font-size: .9rem; }
+#info { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+#reloj { white-space: nowrap; }
+#toolbar { grid-area: toolbar; display: flex; flex-wrap: nowrap; align-items: center; justify-content: center; gap: 10px; }
+#toolbar .btn, #editores-dialogo .btn { display: inline-grid; place-items: center; width: 60px; min-width: 60px; height: 60px; padding: 8px; font-size: 1.8rem; text-decoration: none; }
+#editores-dialogo { background: var(--panel); color: var(--texto); border: 1px solid var(--borde); border-radius: 12px; padding: 16px; max-width: 95vw; }
+#editores-dialogo::backdrop { background: rgba(0,0,0,.8); }
+#editores-dialogo nav { display: flex; gap: 12px; margin-top: 12px; }
+/* Reducción del 25% por lado: 60 × 0.75 = 45 píxeles CSS. */
+#toolbar .btn { width: 45px; min-width: 45px; height: 45px; min-height: 45px; padding: 6px; font-size: 1.35rem; }
+#toolbar .btn svg { width: 24px; height: 24px; }
+#editores-dialogo { padding-top: 56px; }
+#editores-dialogo nav { margin-top: 0; }
+#editores-dialogo #cerrar-editores { position: absolute; top: 8px; right: 8px; margin: 0; width: 36px; min-width: 36px; height: 36px; min-height: 36px; padding: 8px; font-size: 1.25rem; border-radius: 50%; background: #c62828; color: #fff; border: 0; }

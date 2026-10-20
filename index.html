@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#1a1c2c">
+  <title>Sokoban</title>
+  <link rel="stylesheet" href="css/estilos.css?v=cierre4">
+</head>
+<body>
+  <main id="app">
+
+    <header id="hud">
+      <h1>Sokoban</h1>
+      <p id="info" aria-live="polite"></p>
+      <p id="reloj">Tiempo: 00:00</p>
+    </header>
+
+    <nav id="toolbar" role="toolbar" aria-label="Herramientas del juego">
+      <button type="button" id="btn-mapas" class="btn" title="Mapas y marcas" aria-label="Mapas y marcas" aria-haspopup="dialog">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M3 6l8-3 8 3 7-3v16l-7 3-8-3-8 3zM11 3v16M19 6v7"/><circle cx="23" cy="23" r="7" fill="var(--panel)"/><path d="M23 19v5l3 1M21 14h4M23 14v2"/></svg>
+      </button>
+      <button type="button" id="btn-saltar" class="btn" title="Rendirme y saltar al siguiente mapa" aria-label="Rendirme y saltar al siguiente mapa"><span aria-hidden="true">⏭</span></button>
+        <button type="button" class="btn accion-sonido" data-accion="sonido"
+                title="Silenciar sonido" aria-label="Silenciar sonido" aria-pressed="false">
+          <span class="icono" aria-hidden="true">🔊</span>
+        </button>
+      <button type="button" id="btn-editar" class="btn" title="Editores" aria-label="Abrir editores" aria-haspopup="dialog"><span aria-hidden="true">✎</span></button>
+    </nav>
+    <dialog id="editores-dialogo" aria-label="Editores">
+      <button type="button" id="cerrar-editores" class="btn" title="Cerrar" aria-label="Cerrar editores" autofocus><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M5 5l10 10M15 5L5 15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+      <nav aria-label="Elegir editor">
+        <a class="btn" href="editor-niveles/" title="Editor de mapas" aria-label="Editor de mapas"><span aria-hidden="true">🗺</span></a>
+        <a class="btn" href="editor-audio/" title="Editor de sonidos" aria-label="Editor de sonidos"><span aria-hidden="true">♫</span></a>
+        <a class="btn" href="editor/" title="Editor de sprites" aria-label="Editor de sprites"><svg width="32" height="32" viewBox="0 0 16 16" fill="currentColor" fill-rule="evenodd" aria-hidden="true"><path d="M4 2h2v2h4V2h2v2h2v2h1v5h-2v3h-2v-3H5v3H3v-3H1V6h1V4h2zM4 6v2h2V6zM10 6v2h2V6z"/></svg></a>
+      </nav>
+    </dialog>
+
+
+    <div id="overlay-completado" class="oculto" role="dialog" aria-modal="true" aria-labelledby="titulo-completado">
+      <div class="dialogo">
+        <h2 id="titulo-completado">¡Completado!</h2>
+        <p id="texto-completado">Nivel resuelto.</p>
+        <div class="acciones">
+          <button type="button" id="btn-siguiente">Siguiente nivel →</button>
+          <button type="button" id="btn-repetir">Repetir</button>
+        </div>
+      </div>
+    </div>
+
+    <dialog id="mapas-dialogo" aria-labelledby="mapas-titulo">
+      <h2 id="mapas-titulo">Mapas y marcas</h2>
+      <button type="button" id="cerrar-mapas" class="btn" autofocus>Volver al juego</button>
+      <p id="resumen-progreso"></p>
+      <p>Gana con menos pasos. A igual número de pasos, cuenta el menor tiempo.</p>
+      <p>El reloj empieza al intentar moverte. Deshacer no resta pasos ni tiempo. Reiniciar empieza otro intento.</p>
+      <div class="tabla-mapas"><table>
+        <thead><tr><th>Mapa</th><th>Estado</th><th>Mejor marca</th><th>Última resolución</th><th></th></tr></thead>
+        <tbody id="lista-mapas"></tbody>
+      </table></div>
+      <p id="aviso-guardado">Las marcas se guardan en este navegador. Si borras sus datos, se pierden.</p>
+    </dialog>
+
+    <section id="tablero" aria-label="Tablero del juego">
+      <canvas id="game" tabindex="0" width="320" height="240" aria-label="Tablero de Sokoban"></canvas>
+    </section>
+
+    <section id="mando" aria-label="Controles del juego">
+
+      <div id="dpad" role="group" aria-label="Movimiento">
+        <button type="button" class="btn dpad-btn arriba" data-dir="norte"
+                aria-label="Mover arriba"><span aria-hidden="true">▲</span></button>
+        <button type="button" class="btn dpad-btn izquierda" data-dir="oeste"
+                aria-label="Mover a la izquierda"><span aria-hidden="true">◀</span></button>
+        <button type="button" class="btn dpad-btn derecha" data-dir="este"
+                aria-label="Mover a la derecha"><span aria-hidden="true">▶</span></button>
+        <button type="button" class="btn dpad-btn abajo" data-dir="sur"
+                aria-label="Mover abajo"><span aria-hidden="true">▼</span></button>
+      </div>
+
+      <div id="acciones" role="group" aria-label="Acciones">
+        <button type="button" class="btn accion-primaria" data-accion="deshacer"
+                title="Deshacer" aria-label="Deshacer la última jugada">
+          <span class="icono" aria-hidden="true">↶</span>
+        </button>
+        <button type="button" class="btn accion-secundaria" data-accion="reiniciar"
+                title="Reiniciar" aria-label="Reiniciar el nivel">
+          <span class="icono" aria-hidden="true">⟲</span>
+        </button>
+
+      </div>
+
+    </section>
+
+
+  </main>
+  <script type="module" src="js/main.js?v=duracion2"></script>
+</body>
+</html>

@@ -1,0 +1,135 @@
+/* Editor de niveles. Mismo lenguaje visual que el juego principal. */
+
+:root {
+  --fondo: #1a1c2c;
+  --panel: #262838;
+  --panel-claro: #333652;
+  --borde: #3b3e55;
+  --texto: #f2f2f6;
+  --tenue: #a0a4b8;
+  --acento: #94b0c2;
+  --acento-fuerte: #73eff7;
+  --exito: #38b764;
+  --rechazo: #b13e53;
+  --celda: 32px;
+}
+
+* { box-sizing: border-box; }
+html, body {
+  margin: 0; min-height: 100%;
+  background: var(--fondo); color: var(--texto);
+  font: 15px/1.4 system-ui, sans-serif;
+}
+
+#app {
+  max-width: 900px; margin: 0 auto;
+  padding: 16px;
+  display: grid; gap: 16px;
+}
+
+header h1 { margin: 0 0 4px; font-size: 1.25rem; }
+header .hint { margin: 0; color: var(--tenue); font-size: 0.9rem; }
+
+/* --- Controles de tamaño --- */
+#controles-mapa, #guardar {
+  display: flex; gap: 10px; align-items: center; flex-wrap: wrap;
+  background: var(--panel); border: 1px solid var(--borde); border-radius: 8px;
+  padding: 10px 12px;
+}
+#controles-mapa label, #guardar label { display: inline-flex; gap: 6px; align-items: center; }
+input[type="number"], input[type="text"] {
+  background: var(--fondo); color: var(--texto);
+  border: 1px solid var(--borde); border-radius: 6px;
+  padding: 6px 8px; font: inherit;
+  min-height: 36px;
+}
+input[type="number"] { width: 72px; }
+input[type="text"]   { flex: 1; min-width: 160px; }
+
+button {
+  background: var(--panel-claro); color: var(--texto);
+  border: 1px solid var(--borde); border-radius: 6px;
+  padding: 8px 14px; font: inherit; min-height: 40px;
+  cursor: pointer; touch-action: manipulation;
+}
+button:active { background: var(--acento-fuerte); color: var(--fondo); }
+button:focus-visible { outline: 2px solid var(--acento-fuerte); outline-offset: 2px; }
+#btn-guardar { background: var(--exito); color: var(--fondo); border-color: var(--exito); font-weight: 600; }
+
+/* --- Paleta de tiles --- */
+#paleta {
+  display: flex; gap: 6px; flex-wrap: nowrap; overflow-x: auto;
+  padding: 3px;
+}
+.tile-btn {
+  display: grid; place-items: center; flex: 0 0 32px;
+  width: 32px; height: 32px; min-height: 32px; padding: 7px;
+  background: var(--panel); border: 1px solid var(--borde);
+}
+.tile-btn.seleccionado {
+  background: var(--acento-fuerte); color: var(--fondo);
+  border-color: var(--acento-fuerte);
+}
+.tile-btn canvas, .tile-btn svg {
+  display: block; width: 16px; height: 16px; image-rendering: pixelated;
+}
+.tile-btn:disabled { opacity: .5; }
+
+/* --- Mapa (rejilla) --- */
+#area-mapa {
+  overflow: auto;
+  background: var(--panel); border: 1px solid var(--borde); border-radius: 8px;
+  padding: 12px;
+}
+#mapa {
+  display: grid;
+  gap: 1px;
+  background: var(--borde);
+  width: fit-content;
+  user-select: none; -webkit-user-select: none;
+}
+.celda {
+  width: var(--celda); height: var(--celda);
+  background: #1a1c2c;
+  display: grid; place-items: center;
+  cursor: pointer;
+}
+.celda canvas {
+  display: block; width: 32px; height: 32px;
+  image-rendering: pixelated; pointer-events: none;
+}
+#mapa { touch-action: none; }
+
+/* --- Mensaje de guardar --- */
+#mensaje { margin: 0; min-height: 1.4em; font-size: 0.9rem; }
+#mensaje.error { color: var(--rechazo); }
+#mensaje.ok    { color: var(--exito); }
+
+/* --- Lista de niveles guardados --- */
+#guardados { background: var(--panel); border: 1px solid var(--borde); border-radius: 8px; padding: 12px; }
+#guardados h2 { margin: 0 0 8px; font-size: 1rem; color: var(--tenue); }
+#lista { margin: 0; padding-left: 20px; }
+#lista li { margin: 4px 0; display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+#lista .nombre { flex: 1; }
+#lista button { padding: 4px 10px; min-height: 32px; font-size: 0.85rem; }
+
+
+.selector-mapa { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+#elegir-mapa { max-width: 100%; min-height: 45px; padding: 8px; background: var(--panel); color: var(--texto); border: 1px solid var(--borde); border-radius: 6px; }
+
+/* Dimensiones y acciones en una fila, también en móvil. */
+#controles-mapa { flex-wrap: nowrap; gap: 6px; padding: 8px; overflow-x: auto; }
+#controles-mapa label { gap: 4px; flex: 0 0 auto; font-size: .875rem; }
+#controles-mapa input { width: 48px; min-width: 0; min-height: 32px; padding: 4px; }
+#controles-mapa .accion-mapa, #guardar .accion-mapa {
+  display: grid; place-items: center; flex: 0 0 32px;
+  width: 32px; height: 32px; min-height: 32px; padding: 7px;
+}
+.accion-mapa svg { display: block; }
+
+#guardar { display: grid; grid-template-columns: minmax(0, 1fr) 32px; gap: 8px; }
+#guardar label { min-width: 0; white-space: nowrap; }
+#guardar input { min-width: 0; width: 100%; min-height: 32px; padding: 4px 6px; }
+#mensaje { grid-column: 1 / -1; margin: 0; }
+
+#mensaje:empty { display: none; }

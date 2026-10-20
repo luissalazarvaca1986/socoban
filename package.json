@@ -1,0 +1,11 @@
+{
+  "name": "sokoban",
+  "version": "0.1.0",
+  "description": "Motor y herramientas del juego Sokoban del libro «Orden, simetría y armonía».",
+  "type": "module",
+  "scripts": {
+    "test": "node --test test/*.test.js"
+  },
+  "author": "Luis Alfonso Salazar Vaca",
+  "license": "MIT"
+}

@@ -1,0 +1,57 @@
+:root {
+  --mod: 8px;
+  --fondo: #1a1c2c; --panel: #262838; --borde: #3b3e55;
+  --texto: #f2f2f6; --tenue: #a0a4b8; --acento: #94b0c2;
+  --tecla-ancha: 40px;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; background: var(--fondo); color: var(--texto); font: 14px/1.4 system-ui, sans-serif; }
+
+.barra { display: flex; gap: calc(var(--mod)*2); padding: var(--mod) calc(var(--mod)*2);
+         background: var(--panel); border-bottom: 1px solid var(--borde); align-items: center; }
+.barra h1 { font-size: 1rem; margin: 0; }
+.acciones { display: flex; gap: var(--mod); flex-wrap: wrap; }
+.sep { width: 1px; background: var(--borde); align-self: stretch; }
+
+button, .boton { background: var(--panel); color: var(--texto); border: 1px solid var(--borde);
+                 padding: calc(var(--mod)*0.75) var(--mod); border-radius: var(--mod); cursor: pointer; font: inherit; }
+button:hover { background: var(--borde); }
+button:focus-visible { outline: 2px solid var(--acento); outline-offset: 2px; }
+
+.area { display: grid; grid-template-columns: 260px 1fr; gap: calc(var(--mod)*2);
+        padding: calc(var(--mod)*2); height: calc(100% - 56px); overflow: hidden; }
+.col { background: var(--panel); border: 1px solid var(--borde); border-radius: var(--mod);
+       padding: var(--mod); overflow: auto; }
+.col h2 { font-size: 0.9rem; margin: var(--mod) 0; color: var(--tenue); }
+
+#lista-pistas, #lista-momentos { list-style: none; margin: 0 0 var(--mod) 0; padding: 0; }
+#lista-pistas li, #lista-momentos li { padding: var(--mod); border-bottom: 1px solid var(--borde); cursor: pointer; }
+#lista-pistas li.sel { background: var(--borde); }
+#lista-momentos li select { background: var(--fondo); color: var(--texto); border: 1px solid var(--borde); }
+
+.detalle { display: flex; flex-direction: column; gap: var(--mod); }
+.encabezado-pista { display: flex; gap: var(--mod); align-items: center; flex-wrap: wrap; }
+#input-nombre-pista { flex: 1 1 200px; padding: var(--mod); background: var(--fondo); color: var(--texto);
+                     border: 1px solid var(--borde); border-radius: 4px; }
+label { color: var(--tenue); display: flex; align-items: center; gap: 4px; }
+label input[type=number] { width: 70px; padding: 4px; background: var(--fondo); color: var(--texto);
+                           border: 1px solid var(--borde); border-radius: 4px; }
+
+#tabla-acordes { border-collapse: collapse; width: 100%; }
+#tabla-acordes th, #tabla-acordes td { padding: var(--mod); border-bottom: 1px solid var(--borde);
+                                        text-align: left; vertical-align: top; }
+#tabla-acordes tr.sel { background: var(--borde); }
+#tabla-acordes input { width: 100%; background: var(--fondo); color: var(--texto); border: 1px solid var(--borde);
+                       border-radius: 4px; padding: 4px; }
+.notas-chip { display: inline-block; padding: 2px 6px; background: var(--borde); border-radius: 4px; margin: 2px; font-family: monospace; }
+
+.teclado-wrap { margin-top: var(--mod); }
+.teclado { display: flex; position: relative; height: 160px; user-select: none; }
+.tecla { position: relative; width: var(--tecla-ancha); border: 1px solid var(--borde); border-radius: 0 0 4px 4px;
+         cursor: pointer; display: flex; align-items: flex-end; justify-content: center; padding-bottom: 4px;
+         font-family: monospace; font-size: 0.75rem; color: #333; }
+.tecla.blanca { background: #e8e8ee; }
+.tecla.negra  { position: absolute; top: 0; width: 24px; height: 100px; background: #222; color: #aaa; z-index: 2; }
+.tecla.sel { background: var(--acento); color: #000; }
+
+#tabla-acordes tr.reproduciendo { background: #314d50; box-shadow: inset 3px 0 #73eff7; }

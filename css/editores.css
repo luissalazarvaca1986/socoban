@@ -1,0 +1,34 @@
+/* Navegación común de los tres editores. */
+.barra { flex-wrap: wrap; }
+.editor-titulo { display: flex; align-items: center; gap: 12px; }
+.barra .editor-titulo { flex-shrink: 0; }
+.editor-titulo h1 { margin: 0; font: 700 18.75px/1.4 system-ui, sans-serif; color: var(--texto); }
+.volver-juego {
+  display: inline-grid;
+  place-items: center;
+  flex: 0 0 45px;
+  width: 45px;
+  height: 45px;
+  padding: 0;
+  background: var(--panel);
+  color: var(--texto);
+  border: 1px solid var(--borde);
+  border-radius: 8px;
+  text-decoration: none;
+  touch-action: manipulation;
+}
+.volver-juego:hover, .volver-juego:active { background: var(--borde); }
+.volver-juego:focus-visible { outline: 2px solid var(--acento); outline-offset: 2px; }
+.volver-juego svg { display: block; }
+
+/* Toolbar de edición: iconos en una sola fila. */
+.barra .acciones {
+  display: flex; flex: 1 0 100%; min-width: 0; max-width: 100%;
+  gap: 2px; flex-wrap: nowrap; overflow-x: auto; padding: 3px;
+}
+.acciones .sep { display: none; }
+.acciones button {
+  display: grid; place-items: center; flex: 0 0 26px;
+  width: 26px; height: 26px; min-height: 26px; padding: 4px;
+}
+.acciones button svg { display: block; width: 16px; height: 16px; }

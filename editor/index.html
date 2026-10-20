@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Editor de sprites · Sokoban</title>
+  <link rel="stylesheet" href="css/estilos.css?v=edicion-fija1">
+  <link rel="stylesheet" href="../css/editores.css?v=toolbar3">
+</head>
+<body>
+  <header class="barra">
+    <div class="editor-titulo">
+      <a class="volver-juego" href="../" title="Volver al juego" aria-label="Volver al juego"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M19 12H5m7-7-7 7 7 7"/></svg></a>
+      <h1>Editor de sprites</h1>
+    </div>
+    <nav class="acciones" aria-label="Herramientas del editor">
+      <button type="button" id="btn-borrar" title="Eliminar personalización" aria-label="Eliminar personalización"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 6h18M9 6V3h6v3M5 6l1 15h12l1-15M10 10v7m4-7v7"/></svg></button>
+      <span class="sep"></span>
+      <span class="sep"></span>
+      <button type="button" id="btn-restaurar" title="Restaurar tiles originales" aria-label="Restaurar tiles originales"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 10a9 9 0 1 1 2 8M3 4v6h6"/></svg></button>
+      <button type="button" id="btn-exportar" title="Exportar sprites.txt" aria-label="Exportar sprites.txt"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 3v12m-5-5 5 5 5-5M4 16v5h16v-5"/></svg></button>
+      <button type="button" id="btn-importar" title="Importar" aria-label="Importar"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 16V3m-5 5 5-5 5 5M4 16v5h16v-5"/></svg></button>
+      <input type="file" id="file-importar" accept=".txt" hidden>
+    </nav>
+  </header>
+
+  <p id="mensaje-sprites" role="status"></p>
+  <main class="area">
+    <aside class="col lista">
+      <h2>Tiles</h2>
+      <ul id="lista-tiles" class="rejilla-tiles"></ul>
+      <h2>Animaciones</h2>
+      <ul id="lista-animaciones"></ul>
+    </aside>
+
+    <section class="col lienzo-col">
+      <h2 id="nombre-actual">—</h2>
+      <input id="input-nombre" type="text" readonly placeholder="nombre_del_tile">
+      <canvas id="lienzo" width="32" height="32" aria-label="Lienzo de 32 por 32"></canvas>
+      <div class="paleta" id="paleta" role="radiogroup" aria-label="Paleta de colores"></div>
+      <p class="pista">Clic: pintar · Clic derecho o Alt+clic: borrar</p>
+    </section>
+
+    <aside class="col ajustes">
+      <div class="duracion-guardar">
+        <label>Duración (ms)
+          <input id="input-duracion" type="number" min="10" step="10" value="120">
+        </label>
+        <button type="button" id="btn-guardar-local" aria-label="Guardar personalización"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M4 3h13l4 4v14H3V3h1Zm3 0v6h10V3M7 21v-8h10v8"/></svg></button>
+      </div>
+    </aside>
+  </main>
+
+  <script type="module" src="js/editor.js?v=edicion-fija1"></script>
+</body>
+</html>

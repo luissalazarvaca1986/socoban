@@ -1,0 +1,201 @@
+<!doctype html><meta charset="utf-8"><title>Prueba de editores</title>
+<pre id="resultado">En curso</pre>
+<script type="module">
+import { abrirAlmacen, leerContenido, guardarContenido } from '../js/almacen-local.js';
+import { parseSprites } from '../js/formato-sprites.js';
+import { Sprites } from '../js/sprites.js';
+import { listar } from '../js/niveles-almacen.js';
+const salida = document.getElementById('resultado');
+const comprobar = (condicion, mensaje) => { if (!condicion) throw Error(mensaje); };
+const esperar = async fn => { for (let i=0;i<120;i++) { if(await fn()) return; await new Promise(r=>setTimeout(r,50)); } throw Error('Tiempo agotado'); };
+const frame = document.createElement('iframe'); frame.width=390; frame.height=844; document.body.append(frame);
+const abrir = ruta => new Promise(resolve => { frame.onload=resolve; frame.src=ruta; });
+const titulos = [];
+const retorno = () => {
+ const d=frame.contentDocument, a=d.querySelector('.volver-juego'), h=d.querySelector('h1');
+ comprobar(a && a.querySelector('svg') && !a.textContent.trim(), 'Falta retorno gráfico sin texto');
+ comprobar(a.getAttribute('aria-label')==='Volver al juego' && a.pathname===new URL('../',location.href).pathname, 'Destino o nombre de retorno');
+ const estilo=frame.contentWindow.getComputedStyle(h);
+ titulos.push([estilo.fontFamily, estilo.fontSize, estilo.fontWeight, estilo.color, estilo.lineHeight]);
+ const toolbar=[...d.querySelectorAll('.acciones button')];
+ if(toolbar.length){
+  comprobar(toolbar.every(b=>!b.textContent.trim()&&b.querySelector('svg')&&b.getAttribute('aria-label')),'Toolbar con texto o sin nombre');
+  const filas=toolbar.map(b=>b.getBoundingClientRect());
+  comprobar(filas.every(r=>r.top===filas[0].top),'Toolbar de editor en varias filas');
+ }
+ const r=a.getBoundingClientRect(), t=h.getBoundingClientRect();
+ comprobar(r.width===45 && r.right<=t.left && r.top<80 && Math.abs((r.top+r.bottom)/2-(t.top+t.bottom)/2)<2, 'Retorno fuera del título');
+};
+try {
+ comprobar(['127.0.0.1','localhost'].includes(location.hostname),'Solo localhost');
+ const db=await abrirAlmacen();
+ await new Promise((resolve,reject)=>{const tx=db.transaction(['marcas','contenido'],'readwrite');tx.objectStore('marcas').clear();tx.objectStore('contenido').clear();tx.oncomplete=resolve;tx.onerror=()=>reject(tx.error);});
+ localStorage.removeItem('socoban_niveles_v1');
+ const base=parseSprites(await(await fetch('../assets/sprites.txt')).text());
+ await abrir('../editor/');
+ await esperar(()=>frame.contentDocument.querySelector('#mensaje-sprites').textContent.includes('actuales'));
+ retorno();
+ let d=frame.contentDocument;
+ comprobar(d.querySelectorAll('#lista-tiles li').length===18 && d.querySelector('#lienzo').width===32,'Catálogo o resolución incorrectos');
+ comprobar(!d.querySelector('#btn-nuevo-tile, #btn-duplicar, #btn-nueva-anim, #btn-anadir-fotograma, #btn-quitar-fotograma, #previa, #tira-fotogramas'), 'Controles de creación o vista previa presentes');
+ comprobar(d.querySelector('#input-nombre').readOnly && !d.querySelector('.acciones #btn-guardar-local'), 'Nombre editable o guardar en toolbar');
+ comprobar(d.querySelector('#btn-guardar-local').parentElement.classList.contains('duracion-guardar'),'Guardar no está junto a duración');
+ d.querySelector('#lista-tiles li[title="jugador_oeste_b"]').click();
+ d.querySelector('#input-duracion').value='160';
+ d.querySelector('#btn-guardar-local').click();
+ await esperar(()=>!d.querySelector('#btn-guardar-local').disabled);
+ const duraciones=parseSprites(await leerContenido('sprites')).animaciones.trotar_oeste.filter(f=>f[0]==='jugador_oeste_b');
+ comprobar(duraciones.every(f=>f[1]===160),'Duración no persistida');
+
+ const pintar = nombre => {
+   d.querySelector(`#lista-tiles li[title="${nombre}"]`).click();
+   d.querySelector('[aria-label="Color K"]').click();
+   const c=d.querySelector('#lienzo'), r=c.getBoundingClientRect();
+   // La captura de puntero se prueba con input real aparte; aquí se prueba la pincelada.
+   c.setPointerCapture=()=>{};
+   c.dispatchEvent(new frame.contentWindow.PointerEvent('pointerdown',{clientX:r.left+r.width/64,clientY:r.top+r.height/64,pointerId:1}));
+   c.dispatchEvent(new frame.contentWindow.PointerEvent('pointerup',{pointerId:1}));
+ };
+ pintar('suelo'); pintar('muro');
+ d.querySelector('#btn-guardar-local').click();
+ await esperar(()=>d.querySelector('#mensaje-sprites').textContent.includes('Tiles guardados'));
+ let personalizado=parseSprites(await leerContenido('sprites'));
+ comprobar(personalizado.tiles.suelo[0][0]==='K' && personalizado.tiles.muro[0][0]==='K','Pinceladas no guardadas');
+ await abrir('../editor/');
+ await esperar(()=>frame.contentDocument.querySelector('#mensaje-sprites').textContent.includes('personalizados'));
+ d=frame.contentDocument;
+ d.querySelector('#lista-tiles li[title="muro"]').click();
+ d.querySelector('#btn-borrar').click();
+ await esperar(()=>d.querySelector('#mensaje-sprites').textContent.includes('Personalización eliminada'));
+ personalizado=parseSprites(await leerContenido('sprites'));
+ comprobar(JSON.stringify(personalizado.tiles.muro)===JSON.stringify(base.tiles.muro),'No volvió el muro original');
+ comprobar(personalizado.tiles.suelo[0][0]==='K','Se borró otra personalización');
+ comprobar(personalizado.animaciones.trotar_oeste.filter(f=>f[0]==='jugador_oeste_b').every(f=>f[1]===160),'Restaurar muro alteró otra duración');
+ d.querySelector('#lista-tiles li[title="jugador_oeste_b"]').click();
+ d.querySelector('#mensaje-sprites').textContent='';
+ d.querySelector('#btn-borrar').click();
+ await esperar(()=>d.querySelector('#mensaje-sprites').textContent.includes('Personalización eliminada'));
+ personalizado=parseSprites(await leerContenido('sprites'));
+ comprobar(personalizado.animaciones.trotar_oeste.filter(f=>f[0]==='jugador_oeste_b').every(f=>f[1]===120),'No volvió la duración original del tile');
+ comprobar(personalizado.tiles.suelo[0][0]==='K','Restaurar duración borró otro tile');
+ const sprites=await new Sprites().cargar('../assets/sprites.txt');
+ const pixel=sprites.tiles.suelo.getContext('2d').getImageData(0,0,1,1).data;
+ comprobar(pixel[0]===0 && pixel[1]===0 && pixel[2]===0 && pixel[3]===255,'El juego no usa el tile personalizado');
+ comprobar(sprites.tiles.muro.width===32,'Resolución del juego');
+ d.querySelector('#btn-restaurar').click();
+ await esperar(async()=>await leerContenido('sprites')===null);
+ await abrir('../editor-audio/'); retorno();
+ await esperar(()=>frame.contentDocument.querySelectorAll('#lista-pistas li').length>1);
+ const audioDoc=frame.contentDocument;
+ let contextoAudio;
+ class AudioPrueba {
+   state='running';currentTime=0;destination={};
+   constructor(){contextoAudio=this;}
+   resume(){this.state='running';return Promise.resolve();}
+   createGain(){return {gain:{setValueAtTime(){},linearRampToValueAtTime(){}},connect(d){return d;},disconnect(){}};}
+   createOscillator(){return {frequency:{},connect(g){return g;},start(){},stop(){},disconnect(){}};}
+ }
+ frame.contentWindow.AudioContext=AudioPrueba;
+ const reproducir=audioDoc.querySelector('#btn-reproducir');
+ comprobar(!audioDoc.querySelector('#btn-detener'),'Botón detener duplicado');
+ reproducir.click();
+ comprobar(reproducir.getAttribute('aria-label')==='Detener' && reproducir.title==='Detener','No cambia a detener');
+ contextoAudio.currentTime=.1;
+ await esperar(()=>audioDoc.querySelector('tr.reproduciendo')?.dataset.indice==='0');
+ contextoAudio.currentTime=.4;
+ await esperar(()=>audioDoc.querySelector('tr.reproduciendo')?.dataset.indice==='1');
+ reproducir.click();
+ comprobar(reproducir.getAttribute('aria-label')==='Reproducir' && !audioDoc.querySelector('tr.reproduciendo'),'No detiene o limpia resaltado');
+ reproducir.click();
+ audioDoc.querySelectorAll('#lista-pistas li')[1].click();
+ comprobar(reproducir.getAttribute('aria-label')==='Reproducir' && !audioDoc.querySelector('tr.reproduciendo'),'Cambiar pista no detiene');
+ reproducir.click();contextoAudio.currentTime+=2;
+ await esperar(()=>reproducir.getAttribute('aria-label')==='Reproducir');
+
+ await guardarContenido('sprites',(await(await fetch('../assets/sprites.txt')).text()).replace(/# muro\n./,'# muro\nK'));
+ await abrir('../editor-niveles/');
+ await esperar(()=>frame.contentDocument.querySelectorAll('#elegir-mapa option').length===24);
+ retorno();d=frame.contentDocument;
+ const botones=[...d.querySelectorAll('#paleta .tile-btn')];
+ comprobar(botones.length===7 && botones.every(b=>!b.textContent.trim() && b.getAttribute('aria-label')), 'Paleta con texto o sin nombre');
+ const cajas=botones.map(b=>b.getBoundingClientRect());
+ comprobar(cajas.every(r=>r.y===cajas[0].y),'La paleta se divide en filas');
+ const muestras=[...d.querySelectorAll('#paleta canvas')];
+ comprobar(muestras.every(c=>c.width===32 && c.height===32 && c.getBoundingClientRect().width===16 && c.getBoundingClientRect().height===16),'Escala de los tiles incorrecta');
+ comprobar(d.querySelector('[data-ch="@"] canvas').dataset.sprite==='jugador_quieto_0','Jugador distinto del reposo frontal');
+ const real=await new Sprites().cargar('../assets/sprites.txt');
+ for(const c of muestras){
+   const referencia=document.createElement('canvas');referencia.width=32;referencia.height=32;
+   const ctx=referencia.getContext('2d');real.dibujar(ctx,'suelo',0,0);real.dibujar(ctx,c.dataset.sprite,0,0);
+   comprobar(c.toDataURL()===referencia.toDataURL(),'La paleta no muestra el sprite real: '+c.dataset.sprite);
+ }
+ const verificarRejilla = () => {
+   for (const celda of d.querySelectorAll('#mapa .celda')) {
+     const c=celda.querySelector('canvas'), ch=celda.dataset.ch;
+     comprobar(c?.width===32 && c.height===32 && c.getBoundingClientRect().width===32 && c.getBoundingClientRect().height===32,'Casilla sin tile nativo 32×32');
+     const ref=document.createElement('canvas');ref.width=ref.height=32;const ctx=ref.getContext('2d');
+     real.dibujar(ctx,'suelo',0,0);
+     if ('.*+'.includes(ch)) real.dibujar(ctx,'destino',0,0);
+     const tile={'#':'muro','$':'caja','*':'caja_sobre_destino','@':'jugador_quieto_0','+':'jugador_quieto_0'}[ch];
+     if(tile) real.dibujar(ctx,tile,0,0);
+     comprobar(c.toDataURL()===ref.toDataURL(),'La rejilla no usa el tile real: '+ch);
+   }
+ };
+ verificarRejilla();
+ comprobar([...d.querySelector('#mapa canvas').getContext('2d').getImageData(0,0,1,1).data].join(',')==='0,0,0,255','La rejilla no usa la personalización guardada');
+ for(let i=0;i<23;i++){
+   d.querySelector('#elegir-mapa').value='camp:'+i;d.querySelector('#elegir-mapa').dispatchEvent(new Event('change'));
+   verificarRejilla();
+ }
+ const pintarMapa=(ch,celda)=>{
+   d.querySelector(`#paleta button[data-ch="${ch}"]`).click();
+   celda.dispatchEvent(new PointerEvent('pointerdown',{bubbles:true}));
+   frame.contentWindow.dispatchEvent(new PointerEvent('pointerup'));
+ };
+ const casillas=[...d.querySelectorAll('#mapa .celda')];
+ pintarMapa('.',casillas[0]);pintarMapa('@',casillas[0]);verificarRejilla();
+ pintarMapa('@',casillas[1]);verificarRejilla();
+ comprobar(casillas[0].dataset.ch==='.' && d.querySelectorAll('#mapa [data-ch="@"],#mapa [data-ch="+"]').length===1,'Mover jugador no actualiza su casilla anterior');
+ pintarMapa('$',casillas[0]);verificarRejilla();
+ pintarMapa('borrar',casillas[0]);verificarRejilla();
+ d.querySelector('#limpiar').click();verificarRejilla();
+ d.querySelector('#paleta button[data-ch="#"]').click();
+ const acciones=[...d.querySelectorAll('#controles-mapa .accion-mapa')];
+ comprobar(acciones.length===2 && acciones.every(b=>!b.textContent.trim() && b.querySelector('svg')),'Acciones de dimensiones con texto');
+ const filas=[...d.querySelector('#controles-mapa').children].map(n=>n.getBoundingClientRect());
+ comprobar(Math.max(...filas.map(r=>r.top))<Math.min(...filas.map(r=>r.bottom)),'Dimensiones fuera de una fila');
+ comprobar(!d.querySelector('#descargar-mapas, #descargar-actual'), 'Persisten botones de descarga');
+ const guardar=d.querySelector('#btn-guardar');
+ comprobar(!guardar.textContent.trim() && guardar.querySelector('svg') && guardar.getAttribute('aria-label'), 'Guardar no es icono accesible');
+ const nombreCaja=d.querySelector('#nombre').getBoundingClientRect(), guardarCaja=guardar.getBoundingClientRect();
+ comprobar(nombreCaja.right<=guardarCaja.left && Math.abs(nombreCaja.top-guardarCaja.top)<2,'Nombre y guardar no comparten fila');
+ comprobar(d.querySelector('#guardar').previousElementSibling.classList.contains('selector-mapa') && d.querySelector('#guardar').nextElementSibling.id==='controles-mapa','Guardar no está debajo del selector');
+ const elegir=d.querySelector('#elegir-mapa');elegir.value='camp:0';elegir.dispatchEvent(new Event('change'));
+ comprobar(d.querySelector('#nombre').value==='Tutorial','No carga mapa de campaña');
+ d.querySelector('#btn-guardar').click();
+ comprobar(d.querySelector('#mensaje').textContent.includes('Cambia el nombre'),'No exige renombrar');
+ comprobar((await leerContenido('mapas')).length===0,'Sobrescribió campaña');
+ d.querySelector('#nombre').value='Mi tutorial';
+ // Cambiar una pared interior de suelo conserva jugador, cajas y destinos.
+ d.querySelector('.celda[data-f="1"][data-c="1"]').dispatchEvent(new PointerEvent('pointerdown',{bubbles:true}));
+ d.querySelector('#btn-guardar').click();
+ await esperar(()=>d.querySelector('#mensaje').textContent.includes('Mapa 24'));
+ let mapas=await leerContenido('mapas');
+ comprobar(mapas.length===1 && mapas[0].nombre==='Mi tutorial' && mapas[0].texto!==listar()[0].texto && listar()[0].texto.includes('#      #'),'Copia no guardada');
+ comprobar(d.querySelector('#lista .nombre').textContent.startsWith('24.'),'Numeración del editor');
+ d.querySelector('#btn-guardar').click();
+ comprobar(d.querySelector('#mensaje').textContent.includes('Cambia el nombre'),'Permite duplicar nombre propio');
+ await abrir('../editor-niveles/');
+ await esperar(()=>frame.contentDocument.querySelectorAll('#elegir-mapa option').length===25);
+ d=frame.contentDocument;d.querySelector('#elegir-mapa').value='propio:0';d.querySelector('#elegir-mapa').dispatchEvent(new Event('change'));
+ comprobar(d.querySelector('#nombre').value==='Mi tutorial','No recupera mapa guardado');
+ d.querySelector('#nombre').value='Mi segunda versión';d.querySelector('#btn-guardar').click();
+ await esperar(()=>d.querySelector('#mensaje').textContent.includes('Mapa 25'));
+ await abrir('../');
+ await esperar(()=>frame.contentDocument.querySelector('#info').textContent.includes('1/25'));
+ d=frame.contentDocument;d.querySelector('#btn-mapas').click();
+ comprobar(d.body.textContent.includes('Mi tutorial') && d.body.textContent.includes('Mi segunda versión'),'El juego no ofrece mapas nuevos');
+ comprobar(titulos.every(t=>JSON.stringify(t)===JSON.stringify(titulos[0])),'Títulos de los editores inconsistentes');
+ salida.textContent='PASS: rejilla con tiles reales 32×32 en los 23 mapas, pintado y traslado de jugador; títulos y retorno de editores, paleta real 16×16 en una fila, dimensiones y guardado con iconos; retorno de los tres editores, tiles 32×32, edición/persistencia/restauración individual, uso en juego, selector de mapas, renombrado obligatorio y copias 24/25 tras recarga.';
+} catch(error) { salida.textContent='FAIL: '+error.stack; }
+</script>

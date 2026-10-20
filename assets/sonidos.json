@@ -1,0 +1,1739 @@
+{
+  "pistas": {
+    "fondo": {
+      "bucle": true,
+      "bpm": 144,
+      "acordes": [
+        {
+          "notas": [
+            "D3",
+            "A3",
+            "D5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "A4"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "A3",
+            "F5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "G5"
+          ],
+          "duracion": 0.25
+        },
+        {
+          "notas": [
+            "F5"
+          ],
+          "duracion": 0.25
+        },
+        {
+          "notas": [
+            "D3",
+            "D5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "C5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "A3",
+            "A4"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "C5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "D3",
+            "A3",
+            "F5"
+          ],
+          "duracion": 0.75
+        },
+        {
+          "notas": [
+            "D5"
+          ],
+          "duracion": 0.25
+        },
+        {
+          "notas": [
+            "A3",
+            "A4"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "C5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "D3",
+            "D5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "F5"
+          ],
+          "duracion": 0.25
+        },
+        {
+          "notas": [
+            "G5"
+          ],
+          "duracion": 0.25
+        },
+        {
+          "notas": [
+            "A3",
+            "A5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "F5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "Bb2",
+            "F3",
+            "D5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "F5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "F3",
+            "Bb5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "A5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "Bb2",
+            "F5"
+          ],
+          "duracion": 0.75
+        },
+        {
+          "notas": [
+            "D5"
+          ],
+          "duracion": 0.25
+        },
+        {
+          "notas": [
+            "F3",
+            "C5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "D5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "C3",
+            "G3",
+            "G5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "E5"
+          ],
+          "duracion": 0.25
+        },
+        {
+          "notas": [
+            "G5"
+          ],
+          "duracion": 0.25
+        },
+        {
+          "notas": [
+            "G3",
+            "C6"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "G5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "C3",
+            "E5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "D5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "G3",
+            "C5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "A4"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "D3",
+            "A3",
+            "A5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "F5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "A3",
+            "D5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "F5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "D3",
+            "G5"
+          ],
+          "duracion": 0.25
+        },
+        {
+          "notas": [
+            "A5"
+          ],
+          "duracion": 0.25
+        },
+        {
+          "notas": [
+            "G5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "A3",
+            "F5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "D5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "F3",
+            "C4",
+            "C6"
+          ],
+          "duracion": 0.75
+        },
+        {
+          "notas": [
+            "A5"
+          ],
+          "duracion": 0.25
+        },
+        {
+          "notas": [
+            "C4",
+            "F5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "A5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "F3",
+            "G5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "F5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "C4",
+            "D5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "C5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "G2",
+            "D3",
+            "Bb5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "G5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "D3",
+            "D5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "G5"
+          ],
+          "duracion": 0.25
+        },
+        {
+          "notas": [
+            "A5"
+          ],
+          "duracion": 0.25
+        },
+        {
+          "notas": [
+            "G2",
+            "Bb5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "A5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "D3",
+            "G5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "F5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "A2",
+            "E3",
+            "E5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "A5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "E3",
+            "G5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "E5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "A2",
+            "C#5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "E5"
+          ],
+          "duracion": 0.25
+        },
+        {
+          "notas": [
+            "G5"
+          ],
+          "duracion": 0.25
+        },
+        {
+          "notas": [
+            "E3",
+            "E5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "C#5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "D3",
+            "A3",
+            "G5"
+          ],
+          "duracion": 0.25
+        },
+        {
+          "notas": [
+            "F5"
+          ],
+          "duracion": 0.25
+        },
+        {
+          "notas": [
+            "D5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "A3",
+            "C5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "A4"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "D3",
+            "C5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "D5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "A3",
+            "A4"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "F5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "D3",
+            "A3",
+            "C5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "D5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "A3",
+            "F5"
+          ],
+          "duracion": 0.25
+        },
+        {
+          "notas": [
+            "G5"
+          ],
+          "duracion": 0.25
+        },
+        {
+          "notas": [
+            "A5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "D3",
+            "F5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "F5"
+          ],
+          "duracion": 0.75
+        },
+        {
+          "notas": [
+            "D5"
+          ],
+          "duracion": 0.25
+        },
+        {
+          "notas": [
+            "A4"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "Bb2",
+            "F3",
+            "A5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "F5"
+          ],
+          "duracion": 0.75
+        },
+        {
+          "notas": [
+            "D5"
+          ],
+          "duracion": 0.25
+        },
+        {
+          "notas": [
+            "C5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "Bb2",
+            "D5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "D5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "F3",
+            "F5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "Bb5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "C3",
+            "G3",
+            "C6"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "G5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "G3",
+            "E5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "D5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "C3",
+            "C5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "A4"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "G3",
+            "G5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "E5"
+          ],
+          "duracion": 0.25
+        },
+        {
+          "notas": [
+            "G5"
+          ],
+          "duracion": 0.25
+        },
+        {
+          "notas": [
+            "D3",
+            "A3",
+            "F5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "G5"
+          ],
+          "duracion": 0.25
+        },
+        {
+          "notas": [
+            "A5"
+          ],
+          "duracion": 0.25
+        },
+        {
+          "notas": [
+            "A3",
+            "G5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "F5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "D3",
+            "D5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "A5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "A3",
+            "F5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "D5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "F3",
+            "C4",
+            "A5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "G5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "C4",
+            "F5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "D5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "F3",
+            "C5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "C6"
+          ],
+          "duracion": 0.75
+        },
+        {
+          "notas": [
+            "A5"
+          ],
+          "duracion": 0.25
+        },
+        {
+          "notas": [
+            "F5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "G2",
+            "D3",
+            "G5"
+          ],
+          "duracion": 0.25
+        },
+        {
+          "notas": [
+            "A5"
+          ],
+          "duracion": 0.25
+        },
+        {
+          "notas": [
+            "Bb5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "D3",
+            "A5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "G5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "G2",
+            "F5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "Bb5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "D3",
+            "G5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "D5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "A2",
+            "E3",
+            "E5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "C#5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "E3",
+            "E5"
+          ],
+          "duracion": 0.25
+        },
+        {
+          "notas": [
+            "G5"
+          ],
+          "duracion": 0.25
+        },
+        {
+          "notas": [
+            "E5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "A2",
+            "C#5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "E5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "E3",
+            "A5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "G5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "D3",
+            "A3",
+            "D4"
+          ],
+          "duracion": 1
+        },
+        {
+          "notas": [
+            "A3",
+            "A4"
+          ],
+          "duracion": 1
+        },
+        {
+          "notas": [
+            "D3",
+            "F4"
+          ],
+          "duracion": 1
+        },
+        {
+          "notas": [
+            "A3",
+            "G4"
+          ],
+          "duracion": 1
+        },
+        {
+          "notas": [
+            "D3",
+            "A3",
+            "F4"
+          ],
+          "duracion": 1
+        },
+        {
+          "notas": [
+            "A3",
+            "D4"
+          ],
+          "duracion": 1
+        },
+        {
+          "notas": [
+            "D3",
+            "A4"
+          ],
+          "duracion": 1
+        },
+        {
+          "notas": [
+            "A3",
+            "C4"
+          ],
+          "duracion": 1
+        },
+        {
+          "notas": [
+            "Bb2",
+            "F3",
+            "D4"
+          ],
+          "duracion": 1
+        },
+        {
+          "notas": [
+            "F3",
+            "F4"
+          ],
+          "duracion": 1
+        },
+        {
+          "notas": [
+            "Bb2",
+            "Bb4"
+          ],
+          "duracion": 1
+        },
+        {
+          "notas": [
+            "F3",
+            "A4"
+          ],
+          "duracion": 1
+        },
+        {
+          "notas": [
+            "C3",
+            "G3",
+            "G4"
+          ],
+          "duracion": 1
+        },
+        {
+          "notas": [
+            "G3",
+            "E4"
+          ],
+          "duracion": 1
+        },
+        {
+          "notas": [
+            "C3",
+            "G4"
+          ],
+          "duracion": 1
+        },
+        {
+          "notas": [
+            "G3",
+            "C4"
+          ],
+          "duracion": 1
+        },
+        {
+          "notas": [
+            "D3",
+            "A3",
+            "A4"
+          ],
+          "duracion": 1
+        },
+        {
+          "notas": [
+            "A3",
+            "F4"
+          ],
+          "duracion": 1
+        },
+        {
+          "notas": [
+            "D3",
+            "D4"
+          ],
+          "duracion": 1
+        },
+        {
+          "notas": [
+            "A3",
+            "F4"
+          ],
+          "duracion": 1
+        },
+        {
+          "notas": [
+            "F3",
+            "C4"
+          ],
+          "duracion": 1
+        },
+        {
+          "notas": [
+            "C4",
+            "A4"
+          ],
+          "duracion": 1
+        },
+        {
+          "notas": [
+            "F3",
+            "F4"
+          ],
+          "duracion": 1
+        },
+        {
+          "notas": [
+            "C4",
+            "A4"
+          ],
+          "duracion": 1
+        },
+        {
+          "notas": [
+            "G2",
+            "D3",
+            "Bb4"
+          ],
+          "duracion": 1
+        },
+        {
+          "notas": [
+            "D3",
+            "G4"
+          ],
+          "duracion": 1
+        },
+        {
+          "notas": [
+            "G2",
+            "D4"
+          ],
+          "duracion": 1
+        },
+        {
+          "notas": [
+            "D3",
+            "G4"
+          ],
+          "duracion": 1
+        },
+        {
+          "notas": [
+            "A2",
+            "E3",
+            "E4"
+          ],
+          "duracion": 1
+        },
+        {
+          "notas": [
+            "E3",
+            "A4"
+          ],
+          "duracion": 1
+        },
+        {
+          "notas": [
+            "A2",
+            "G4"
+          ],
+          "duracion": 1
+        },
+        {
+          "notas": [
+            "E3",
+            "E4"
+          ],
+          "duracion": 1
+        },
+        {
+          "notas": [
+            "D3",
+            "A3",
+            "D5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "A4"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "A3",
+            "F5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "G5"
+          ],
+          "duracion": 0.25
+        },
+        {
+          "notas": [
+            "F5"
+          ],
+          "duracion": 0.25
+        },
+        {
+          "notas": [
+            "D3",
+            "D5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "C5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "A3",
+            "A4"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "C5"
+          ],
+          "duracion": 0.25
+        },
+        {
+          "notas": [
+            "F5"
+          ],
+          "duracion": 0.25
+        },
+        {
+          "notas": [
+            "D3",
+            "A3",
+            "F5"
+          ],
+          "duracion": 0.75
+        },
+        {
+          "notas": [
+            "D5"
+          ],
+          "duracion": 0.25
+        },
+        {
+          "notas": [
+            "A3",
+            "A4"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "C5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "D3",
+            "D5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "F5"
+          ],
+          "duracion": 0.25
+        },
+        {
+          "notas": [
+            "G5"
+          ],
+          "duracion": 0.25
+        },
+        {
+          "notas": [
+            "A3",
+            "A5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "F5"
+          ],
+          "duracion": 0.25
+        },
+        {
+          "notas": [
+            "D5"
+          ],
+          "duracion": 0.25
+        },
+        {
+          "notas": [
+            "Bb2",
+            "F3",
+            "D5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "F5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "F3",
+            "Bb5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "A5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "Bb2",
+            "F5"
+          ],
+          "duracion": 0.75
+        },
+        {
+          "notas": [
+            "D5"
+          ],
+          "duracion": 0.25
+        },
+        {
+          "notas": [
+            "F3",
+            "C5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "D5"
+          ],
+          "duracion": 0.25
+        },
+        {
+          "notas": [
+            "G5"
+          ],
+          "duracion": 0.25
+        },
+        {
+          "notas": [
+            "C3",
+            "G3",
+            "G5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "E5"
+          ],
+          "duracion": 0.25
+        },
+        {
+          "notas": [
+            "G5"
+          ],
+          "duracion": 0.25
+        },
+        {
+          "notas": [
+            "G3",
+            "C6"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "G5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "C3",
+            "E5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "D5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "G3",
+            "C5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "A4"
+          ],
+          "duracion": 0.25
+        },
+        {
+          "notas": [
+            "A5"
+          ],
+          "duracion": 0.25
+        },
+        {
+          "notas": [
+            "D3",
+            "A3",
+            "A5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "F5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "A3",
+            "D5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "F5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "D3",
+            "G5"
+          ],
+          "duracion": 0.25
+        },
+        {
+          "notas": [
+            "A5"
+          ],
+          "duracion": 0.25
+        },
+        {
+          "notas": [
+            "G5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "A3",
+            "F5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "D5"
+          ],
+          "duracion": 0.25
+        },
+        {
+          "notas": [
+            "C6"
+          ],
+          "duracion": 0.25
+        },
+        {
+          "notas": [
+            "F3",
+            "C4",
+            "C6"
+          ],
+          "duracion": 0.75
+        },
+        {
+          "notas": [
+            "A5"
+          ],
+          "duracion": 0.25
+        },
+        {
+          "notas": [
+            "C4",
+            "F5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "A5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "F3",
+            "G5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "F5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "C4",
+            "D5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "C5"
+          ],
+          "duracion": 0.25
+        },
+        {
+          "notas": [
+            "Bb5"
+          ],
+          "duracion": 0.25
+        },
+        {
+          "notas": [
+            "G2",
+            "D3",
+            "Bb5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "G5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "D3",
+            "D5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "G5"
+          ],
+          "duracion": 0.25
+        },
+        {
+          "notas": [
+            "A5"
+          ],
+          "duracion": 0.25
+        },
+        {
+          "notas": [
+            "G2",
+            "Bb5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "A5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "D3",
+            "G5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "F5"
+          ],
+          "duracion": 0.25
+        },
+        {
+          "notas": [
+            "E5"
+          ],
+          "duracion": 0.25
+        },
+        {
+          "notas": [
+            "A2",
+            "E3",
+            "E5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "A5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "E3",
+            "G5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "E5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "A2",
+            "C#5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "E5"
+          ],
+          "duracion": 0.25
+        },
+        {
+          "notas": [
+            "G5"
+          ],
+          "duracion": 0.25
+        },
+        {
+          "notas": [
+            "E3",
+            "E5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "C#5"
+          ],
+          "duracion": 0.5
+        }
+      ]
+    },
+    "paso_par": {
+      "notas": [
+        "C5"
+      ],
+      "duracion": 0.08
+    },
+    "paso_impar": {
+      "notas": [
+        "D5"
+      ],
+      "duracion": 0.08
+    },
+    "empuje": {
+      "notas": [
+        "G3",
+        "C4"
+      ],
+      "duracion": 0.12
+    },
+    "rechazo": {
+      "notas": [
+        "F#3",
+        "G3"
+      ],
+      "duracion": 0.12
+    },
+    "caja_colocada": {
+      "bucle": false,
+      "bpm": 120,
+      "acordes": [
+        {
+          "notas": [
+            "C5",
+            "E5",
+            "G5"
+          ],
+          "duracion": 1
+        }
+      ]
+    },
+    "nivel_completo": {
+      "bucle": false,
+      "bpm": 120,
+      "acordes": [
+        {
+          "notas": [
+            "C5",
+            "E5",
+            "G5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "D5",
+            "F5",
+            "A5"
+          ],
+          "duracion": 0.5
+        },
+        {
+          "notas": [
+            "E5",
+            "G5",
+            "C6"
+          ],
+          "duracion": 1.5
+        }
+      ]
+    }
+  },
+  "momentos": {
+    "al_cargar_nivel": "fondo",
+    "al_dar_paso_par": "paso_par",
+    "al_dar_paso_impar": "paso_impar",
+    "al_empujar": "empuje",
+    "al_rechazar": "rechazo",
+    "al_colocar_caja": "caja_colocada",
+    "al_completar_nivel": "nivel_completo"
+  }
+}

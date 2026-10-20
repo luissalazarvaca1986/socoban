@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Editor de sonido · Sokoban</title>
+  <link rel="stylesheet" href="css/estilos.css?v=reproduccion2">
+  <link rel="stylesheet" href="../css/editores.css?v=toolbar3">
+</head>
+<body>
+  <header class="barra">
+    <div class="editor-titulo">
+      <a class="volver-juego" href="../" title="Volver al juego" aria-label="Volver al juego"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M19 12H5m7-7-7 7 7 7"/></svg></a>
+      <h1>Editor de sonido</h1>
+    </div>
+    <nav class="acciones" aria-label="Herramientas del editor">
+      <button type="button" id="btn-nueva-pista" title="Nueva pista" aria-label="Nueva pista"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M9 17V4l11-2v12M9 7l11-2M2 6h5M4.5 3.5v5"/><ellipse cx="6" cy="18" rx="3" ry="2"/><ellipse cx="17" cy="15" rx="3" ry="2"/></svg></button>
+      <button type="button" id="btn-anadir-acorde" title="Añadir acorde" aria-label="Añadir acorde"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 8h8M7 4v8m8-9v18m4-15v12M3 17h8M3 21h8"/></svg></button>
+      <button type="button" id="btn-quitar-acorde" title="Quitar acorde" aria-label="Quitar acorde"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 8h8m4-5v18m4-15v12M3 17h8M3 21h8"/></svg></button>
+      <button type="button" id="btn-reproducir" title="Reproducir" aria-label="Reproducir"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m7 3 14 9-14 9V3Z" fill="currentColor"/></svg></button>
+      <span class="sep"></span>
+      <button type="button" id="btn-guardar-local" title="Guardar y usar en el juego" aria-label="Guardar y usar en el juego"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 3h13l4 4v14H3V3h1Zm3 0v6h10V3M7 21v-8h10v8"/></svg></button>
+      <button type="button" id="btn-restaurar" title="Restaurar sonido original" aria-label="Restaurar sonido original"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 10a9 9 0 1 1 2 8M3 4v6h6"/></svg></button>
+      <button type="button" id="btn-exportar" title="Exportar sonidos.json" aria-label="Exportar sonidos.json"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 3v12m-5-5 5 5 5-5M4 16v5h16v-5"/></svg></button>
+      <button type="button" id="btn-importar" title="Importar" aria-label="Importar"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 16V3m-5 5 5-5 5 5M4 16v5h16v-5"/></svg></button>
+      <input type="file" id="file-importar" accept=".json" hidden>
+    </nav>
+  </header>
+
+  <p id="mensaje-audio" role="status"></p>
+  <main class="area">
+    <aside class="col pistas-col">
+      <h2>Pistas</h2>
+      <ul id="lista-pistas"></ul>
+      <h2>Momentos → Pista</h2>
+      <ul id="lista-momentos"></ul>
+      <button id="btn-nuevo-momento">+ momento</button>
+    </aside>
+
+    <section class="col detalle">
+      <div class="encabezado-pista">
+        <input id="input-nombre-pista" type="text" placeholder="nombre_de_la_pista">
+        <label>BPM <input id="input-bpm" type="number" min="30" max="240" value="90"></label>
+        <label><input id="input-bucle" type="checkbox"> bucle</label>
+      </div>
+      <table id="tabla-acordes">
+        <thead>
+          <tr><th>#</th><th>Notas</th><th>Duración (pulsos)</th><th></th></tr>
+        </thead>
+        <tbody id="cuerpo-acordes"></tbody>
+      </table>
+      <section class="teclado-wrap">
+        <h2>Teclado (clic para añadir nota al acorde seleccionado)</h2>
+        <div id="teclado" class="teclado" role="group" aria-label="Teclado de piano"></div>
+      </section>
+    </section>
+  </main>
+
+  <script type="module" src="js/editor-audio.js?v=reproduccion2"></script>
+</body>
+</html>
