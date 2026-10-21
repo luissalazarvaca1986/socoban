@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Editor de sonido · Sokoban</title>
-  <link rel="stylesheet" href="css/estilos.css?v=reproduccion2">
+  <link rel="stylesheet" href="css/estilos.css?v=panel-pista1">
   <link rel="stylesheet" href="../css/editores.css?v=toolbar3">
 </head>
 <body>
@@ -14,6 +14,7 @@
       <h1>Editor de sonido</h1>
     </div>
     <nav class="acciones" aria-label="Herramientas del editor">
+      <button type="button" id="btn-panel-pistas" title="Ocultar pistas y momentos" aria-label="Ocultar pistas y momentos" aria-controls="panel-pistas" aria-expanded="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9 4v16"/><path id="flecha-panel-pistas" d="m17 9-3 3 3 3"/></svg></button>
       <button type="button" id="btn-nueva-pista" title="Nueva pista" aria-label="Nueva pista"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M9 17V4l11-2v12M9 7l11-2M2 6h5M4.5 3.5v5"/><ellipse cx="6" cy="18" rx="3" ry="2"/><ellipse cx="17" cy="15" rx="3" ry="2"/></svg></button>
       <button type="button" id="btn-anadir-acorde" title="Añadir acorde" aria-label="Añadir acorde"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 8h8M7 4v8m8-9v18m4-15v12M3 17h8M3 21h8"/></svg></button>
       <button type="button" id="btn-quitar-acorde" title="Quitar acorde" aria-label="Quitar acorde"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 8h8m4-5v18m4-15v12M3 17h8M3 21h8"/></svg></button>
@@ -29,7 +30,7 @@
 
   <p id="mensaje-audio" role="status"></p>
   <main class="area">
-    <aside class="col pistas-col">
+    <aside class="col pistas-col" id="panel-pistas">
       <h2>Pistas</h2>
       <ul id="lista-pistas"></ul>
       <h2>Momentos → Pista</h2>
@@ -38,6 +39,9 @@
     </aside>
 
     <section class="col detalle">
+      <p class="pista-desplazamiento">Desliza horizontalmente para explorar la pista y el teclado.</p>
+      <div class="area-pista" id="area-pista" tabindex="0" role="region" aria-label="Edición de la pista, desplazamiento horizontal">
+      <div class="contenido-pista">
       <div class="encabezado-pista">
         <input id="input-nombre-pista" type="text" placeholder="nombre_de_la_pista">
         <label>BPM <input id="input-bpm" type="number" min="30" max="240" value="90"></label>
@@ -53,9 +57,11 @@
         <h2>Teclado (clic para añadir nota al acorde seleccionado)</h2>
         <div id="teclado" class="teclado" role="group" aria-label="Teclado de piano"></div>
       </section>
+      </div>
+      </div>
     </section>
   </main>
 
-  <script type="module" src="js/editor-audio.js?v=reproduccion2"></script>
+  <script type="module" src="js/editor-audio.js?v=panel-pista1"></script>
 </body>
 </html>

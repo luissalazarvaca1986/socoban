@@ -240,6 +240,19 @@ class Editor {
   }
 
   #montarAcciones(root) {
+    const botonPanel = root.getElementById('btn-panel-pistas');
+    const panelPistas = root.getElementById('panel-pistas');
+    botonPanel.onclick = () => {
+      const mostrar = panelPistas.hidden;
+      if (!mostrar && panelPistas.contains(root.activeElement)) botonPanel.focus();
+      panelPistas.hidden = !mostrar;
+      panelPistas.closest('.area').classList.toggle('panel-colapsado', !mostrar);
+      botonPanel.setAttribute('aria-expanded', String(mostrar));
+      const nombre = mostrar ? 'Ocultar pistas y momentos' : 'Mostrar pistas y momentos';
+      botonPanel.title = nombre;
+      botonPanel.setAttribute('aria-label', nombre);
+      root.getElementById('flecha-panel-pistas').setAttribute('d', mostrar ? 'm17 9-3 3 3 3' : 'm14 9 3 3-3 3');
+    };
     root.getElementById('btn-nueva-pista').onclick = () => {
       const n = this.#nuevoNombre('pista');
       this.doc.anadirPista(new Pista(n));

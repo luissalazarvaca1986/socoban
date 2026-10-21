@@ -18,8 +18,8 @@ button, .boton { background: var(--panel); color: var(--texto); border: 1px soli
 button:hover { background: var(--borde); }
 button:focus-visible { outline: 2px solid var(--acento); outline-offset: 2px; }
 
-.area { display: grid; grid-template-columns: 260px 1fr; gap: calc(var(--mod)*2);
-        padding: calc(var(--mod)*2); height: calc(100% - 56px); overflow: hidden; }
+.area { display: grid; grid-template-columns: 260px minmax(0, 1fr); gap: calc(var(--mod)*2);
+        padding: calc(var(--mod)*2); align-items: start; }
 .col { background: var(--panel); border: 1px solid var(--borde); border-radius: var(--mod);
        padding: var(--mod); overflow: auto; }
 .col h2 { font-size: 0.9rem; margin: var(--mod) 0; color: var(--tenue); }
@@ -29,7 +29,23 @@ button:focus-visible { outline: 2px solid var(--acento); outline-offset: 2px; }
 #lista-pistas li.sel { background: var(--borde); }
 #lista-momentos li select { background: var(--fondo); color: var(--texto); border: 1px solid var(--borde); }
 
-.detalle { display: flex; flex-direction: column; gap: var(--mod); }
+.pistas-col { min-width: 0; overflow-wrap: anywhere; }
+.pistas-col select { max-width: 100%; }
+.pistas-col[hidden] { display: none; }
+.area.panel-colapsado { grid-template-columns: minmax(0, 1fr); }
+.detalle { display: flex; flex-direction: column; gap: var(--mod); min-width: 0; overflow: visible; }
+.area-pista { width: 100%; min-width: 0; overflow-x: scroll; overflow-y: hidden;
+              overscroll-behavior-x: contain; scrollbar-color: var(--acento) var(--fondo); }
+.area-pista:focus-visible { outline: 2px solid var(--acento); outline-offset: 2px; }
+.area-pista::-webkit-scrollbar { height: 12px; }
+.area-pista::-webkit-scrollbar-track { background: var(--fondo); }
+.area-pista::-webkit-scrollbar-thumb { background: var(--acento); border-radius: 6px; }
+.contenido-pista { min-width: 620px; display: flex; flex-direction: column; gap: var(--mod); }
+.pista-desplazamiento { display: none; margin: 0; color: var(--tenue); font-size: 0.85rem; }
+@media (max-width: 700px) {
+  .area:not(.panel-colapsado) { grid-template-columns: minmax(0, 40%) minmax(0, 1fr); }
+  .pista-desplazamiento { display: block; }
+}
 .encabezado-pista { display: flex; gap: var(--mod); align-items: center; flex-wrap: wrap; }
 #input-nombre-pista { flex: 1 1 200px; padding: var(--mod); background: var(--fondo); color: var(--texto);
                      border: 1px solid var(--borde); border-radius: 4px; }

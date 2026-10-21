@@ -1,0 +1,54 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Prueba de navegación del editor de sonido</title>
+<pre id="resultado">En curso</pre>
+<script type="module">
+const salida = document.getElementById('resultado');
+const comprobar = (valor, texto) => { if (!valor) throw Error(texto); };
+const esperar = async fn => {
+  for (let i = 0; i < 100; i++) {
+    if (fn()) return;
+    await new Promise(r => setTimeout(r, 50));
+  }
+  throw Error('Editor sin cargar');
+};
+const frame = document.createElement('iframe');
+frame.height = 844;
+document.body.append(frame);
+const resultados = [];
+try {
+  for (const ancho of [390, 1280]) {
+    frame.width = ancho;
+    await new Promise(resolve => { frame.onload = resolve; frame.src = '../editor-audio/'; });
+    const d = frame.contentDocument;
+    await esperar(() => d.querySelector('#lista-pistas li'));
+    const panel = d.getElementById('panel-pistas');
+    const boton = d.getElementById('btn-panel-pistas');
+    const pista = d.getElementById('area-pista');
+    const duracion = d.querySelector('#cuerpo-acordes input');
+    duracion.value = '1.5';
+    duracion.dispatchEvent(new Event('input', { bubbles: true }));
+    const nombre = d.getElementById('input-nombre-pista').value;
+    const anchoInicial = pista.clientWidth;
+    comprobar(!panel.hidden && boton.getAttribute('aria-expanded') === 'true', 'Panel inicial');
+    boton.click();
+    comprobar(panel.hidden && boton.getAttribute('aria-expanded') === 'false', 'Primer clic no oculta');
+    comprobar(pista.clientWidth > anchoInicial, 'Ocultar no amplía la pista');
+    comprobar(d.getElementById('input-nombre-pista').value === nombre && duracion.value === '1.5', 'El colapso pierde la edición');
+    if (ancho === 390) {
+      comprobar(pista.scrollWidth > pista.clientWidth, 'Falta área horizontal explorable');
+      pista.scrollLeft = pista.scrollWidth;
+      comprobar(pista.scrollLeft > 0, 'La pista no se desplaza horizontalmente');
+      pista.scrollLeft = 0;
+      pista.focus();
+      comprobar(d.activeElement === pista, 'La región no admite foco de teclado');
+    }
+    boton.click();
+    comprobar(!panel.hidden && boton.getAttribute('aria-expanded') === 'true', 'Segundo clic no abre');
+    comprobar(d.getElementById('input-nombre-pista').value === nombre && duracion.value === '1.5', 'Abrir pierde la edición');
+    comprobar(d.documentElement.scrollWidth <= ancho, 'La página desborda horizontalmente');
+    resultados.push({ ancho, colapsar: true, abrir: true, edicionConservada: true });
+  }
+  salida.textContent = 'OK ' + JSON.stringify(resultados);
+} catch (error) { salida.textContent = 'ERROR ' + error.message; }
+</script>

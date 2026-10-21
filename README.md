@@ -147,6 +147,13 @@ es circular, rojo y está anclado a su esquina superior derecha.
 
 ### Música de fondo
 
+El editor de sonido permite ocultar y volver a mostrar el panel de pistas y
+momentos con el primer botón de su toolbar. La selección y las modificaciones
+se conservan al alternarlo. La zona de la pista (parámetros, acordes y teclado)
+se desplaza horizontalmente cuando no cabe, también con tacto o teclado.
+`test/audio-interfaz.html` comprueba el panel, el ancho y la conservación de
+la edición en vistas de 390 y 1280 px, sin guardar sonidos.
+
 «Almacén en marcha»: composición original, energía rock en re menor, 32
 compases y cuatro secciones, 144 BPM (53,33 segundos), en bucle continuo.
 El sintetizador conserva la melodía por debajo de las señales del juego.
